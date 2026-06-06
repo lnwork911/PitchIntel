@@ -1,0 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0f172a;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  max-width: 1200px;
+  margin: auto;
+  padding: 24px;
+}
+
+.hero {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  color: #94a3b8;
+}
+
+.card {
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.card h2 {
+  margin-bottom: 15px;
+}
+
+.card h3 {
+  margin-bottom: 10px;
+}
+
+.card p,
+.card li {
+  line-height: 1.6;
+}
+
+.subscribe {
+  text-align: center;
+}
+
+.subscribe input {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 8px;
+  border: none;
+}
+
+.subscribe button {
+  margin-top: 15px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
