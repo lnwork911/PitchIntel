@@ -1,3 +1,30 @@
+import { useEffect, useState } from 'react'
+import { supabase } from './lib/supabase'
+  
+export default function App() {
+
+  const [matches, setMatches] = useState([])
+
+  useEffect(() => {
+
+    async function loadMatches() {
+
+      const { data, error } = await supabase
+        .from('matches')
+        .select('*')
+        .order('match_date', { ascending: true })
+        .limit(10)
+
+      if (!error) {
+        setMatches(data)
+      }
+    }
+
+    loadMatches()
+
+  }, [])
+  
+  /*
 export default function App() {
   return (
     <div className="app">
@@ -87,3 +114,4 @@ export default function App() {
     </div>
   );
 }
+*/
