@@ -23,10 +23,8 @@ export default function App() {
     loadMatches()
 
   }, [])
-  
-  /*
-export default function App() {
-  return (
+
+
     <div className="app">
       <header className="hero">
         <h1>PitchIntel</h1>
@@ -87,15 +85,19 @@ export default function App() {
           </p>
         </section>
 
-        <section className="card">
-          <h2>⚽ Today's Matches</h2>
+<section className="card">
 
-          <ul>
-            <li>Liverpool vs Arsenal</li>
-            <li>Barcelona vs Atletico Madrid</li>
-            <li>Bayern Munich vs Dortmund</li>
-          </ul>
-        </section>
+  <h2>⚽ Today's Matches</h2>
+
+  <ul>
+    {matches.map(match => (
+      <li key={match.id}>
+        {match.home_team} vs {match.away_team}
+      </li>
+    ))}
+  </ul>
+
+</section>
 
         <section className="card subscribe">
           <h2>📩 Subscribe to Daily Briefing</h2>
