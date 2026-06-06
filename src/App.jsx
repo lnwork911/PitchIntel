@@ -31,8 +31,6 @@ export default function App() {
         <p>AI-powered football intelligence</p>
       </header>
 
-      <main>
-
         <section className="card">
           <h2>🔥 Story of the Day</h2>
 
@@ -112,8 +110,6 @@ export default function App() {
           </button>
         </section>
 
-      </main>
+      
     </div>
-  );
-}
-*/
+
