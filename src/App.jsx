@@ -14,7 +14,6 @@ const { data, error } = await supabase
 .order("match_date", { ascending: true })
 .limit(10);
 
-```
     if (error) {
       console.error(error);
     } else {
@@ -28,13 +27,17 @@ const { data, error } = await supabase
 }
 
 loadMatches();
-```
 
 }, []);
 
-return ( <div className="app"> <header className="hero"> <h1>FootballIntel</h1> <p>AI-powered football intelligence</p> </header>
+return (
 
-```
+
+FootballIntel
+AI-powered football intelligence
+
+
+
   <main>
     <section className="card">
       <h2>🔥 Story of the Day</h2>
@@ -139,7 +142,6 @@ return ( <div className="app"> <header className="hero"> <h1>FootballIntel</h1> 
     </section>
   </main>
 </div>
-```
 
 );
 }
