@@ -2,7 +2,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="hero">
-        <h1>FootballIntel</h1>
+        <h1>PitchIntel</h1>
         <p>AI-powered football intelligence</p>
       </header>
 
