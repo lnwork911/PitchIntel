@@ -3,171 +3,190 @@ import { supabase } from "./lib/supabase";
 
 export default function App() {
   const [matches, setMatches] = useState([]);
-  const [loading, setLoading] = useState(true);
-  
   const [story, setStory] = useState(null);
-  const [storyLoading, setStoryLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadMatches() {
-      try {
-        const { data, error } = await supabase
-          .from("matches")
-          .select("*")
-          .order("match_date", { ascending: true })
-          .limit(10);
-
-        if (error) {
-          console.error("Supabase error:", error);
-        } else {
-          setMatches(data || []);
-        }
-      } catch (err) {
-        console.error("Unexpected error:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadMatches();
-  }, []);
-
-  useEffect(() => {
-    async function loadStory() {
-      const { data, error } = await supabase
+    async function loadData() {
+      const { data: storyData } = await supabase
         .from("ai_articles")
         .select("*")
         .order("created_at", { ascending: false })
-        .limit(1)
-        .single();
-  
-      if (error) {
-        console.error(error);
-      } else {
-        setStory(data);
-      }
-  
-      setStoryLoading(false);
+        .limit(1);
+
+      const { data: matchData } = await supabase
+        .from("matches")
+        .select("*")
+        .order("match_date", { ascending: true })
+        .limit(10);
+
+      setStory(storyData?.[0] || null);
+      setMatches(matchData || []);
+      setLoading(false);
     }
-  
-    loadStory();
-  }, []);  
-  
+
+    loadData();
+  }, []);
+
+  const momentum = [
+    ["Liverpool", "88", "up"],
+    ["Arsenal", "84", "up"],
+    ["Manchester City", "81", "down"],
+    ["Barcelona", "79", "up"]
+  ];
+
+  const moods = [
+    ["Liverpool", "Optimistic", "green"],
+    ["Arsenal", "Nervous", "yellow"],
+    ["Chelsea", "Frustrated", "red"],
+    ["Barcelona", "Confident", "green"]
+  ];
+
+  const chaos = [
+    ["Chelsea", 92],
+    ["Tottenham", 87],
+    ["Manchester United", 83]
+  ];
+
   return (
     <div className="app">
-      <nav className="card">
-        <h2>⚽ FootballIntel</h2>
+      <div className="ticker">
+        <span>BREAKING</span>
+        <p>Villa stun City • Arsenal stay alive • Chelsea pressure grows • Title race tightens</p>
+      </div>
+
+      <nav className="navbar">
+        <div className="brand">
+          <div className="brand-mark">PI</div>
+          <div>
+            <h1>PitchIntel</h1>
+            <p>AI-powered football intelligence</p>
+          </div>
+        </div>
+        <button className="nav-button">Daily Briefing</button>
       </nav>
-      
-      <header className="hero">
-        <h1>FootballIntel</h1>
-        <p>AI-powered football intelligence</p>
-      </header>
 
-      <main>
-        <section className="card">
-          <h2>🔥 Story of the Day</h2>
-        
-          {storyLoading ? (
-            <p>Loading story...</p>
-          ) : !story ? (
-            <p>No story found.</p>
-          ) : (
-            <>
-              <h3 className="story-title">
-                {story?.title}
-              </h3>
-              
-              <p className="story-summary">
-                {story?.summary}
-              </p>
-              
-              <div className="story-content">
-                {story?.content}
-              </div>              
-            </>
-          )}
-        </section>
-        
-        <section className="card">
-          <h2>📈 Momentum Rankings</h2>
-
-          <ol>
-            <li>Liverpool</li>
-            <li>Barcelona</li>
-            <li>Arsenal</li>
-            <li>Inter Milan</li>
-            <li>Bayern Munich</li>
-          </ol>
-        </section>
-
-        <section className="card">
-          <h2>❤️ Fan Mood Tracker</h2>
-
-          <ul>
-            <li>Liverpool — Optimistic</li>
-            <li>Arsenal — Nervous</li>
-            <li>Barcelona — Confident</li>
-            <li>Chelsea — Frustrated</li>
-          </ul>
-        </section>
-
-        <section className="card">
-          <h2>😂 Chaos Meter</h2>
-
-          <ol>
-            <li>Chelsea</li>
-            <li>Tottenham</li>
-            <li>Manchester United</li>
-          </ol>
-
-          <p>
-            Every week feels like a different season.
+      <section className="hero-story">
+        <div>
+          <p className="eyebrow">🔥 Story of the Day</p>
+          <h2>
+            {story?.title || "Football intelligence built for the modern fan"}
+          </h2>
+          <p className="hero-summary">
+            {story?.summary ||
+              "Real match data, AI analysis, fan emotion, momentum signals, and storylines that explain what football feels like today."}
           </p>
+          <button className="primary-button">Read Analysis</button>
+        </div>
+
+        <div className="hero-panel">
+          <p>Title Race Index</p>
+          {momentum.slice(0, 3).map((team) => (
+            <div className="metric-row" key={team[0]}>
+              <span>{team[0]}</span>
+              <strong>{team[1]}</strong>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <main className="layout">
+        <section className="left-column">
+          <div className="card">
+            <h3>🧠 Full Intelligence Brief</h3>
+            <div className="article-body">
+              {story?.content || "Generate a story to populate this section from ai_articles."}
+            </div>
+          </div>
+
+          <div className="card">
+            <h3>⚽ Match Intelligence</h3>
+
+            {loading ? (
+              <p>Loading matches...</p>
+            ) : matches.length === 0 ? (
+              <p>No matches found.</p>
+            ) : (
+              <div className="match-grid">
+                {matches.map((match) => (
+                  <div className="match-card" key={match.id}>
+                    <div className="teams">
+                      <span className="badge">{getInitials(match.home_team)}</span>
+                      <strong>{match.home_team}</strong>
+                      <span>vs</span>
+                      <strong>{match.away_team}</strong>
+                      <span className="badge">{getInitials(match.away_team)}</span>
+                    </div>
+
+                    <p>
+                      {match.match_date
+                        ? new Date(match.match_date).toLocaleDateString()
+                        : "Date TBD"}
+                    </p>
+
+                    <div className="match-metrics">
+                      <span>Importance 86</span>
+                      <span>Upset Risk 28%</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </section>
 
-        <section className="card">
-          <h2>⚽ Today's Matches</h2>
+        <aside className="right-column">
+          <div className="card">
+            <h3>📈 Momentum Rankings</h3>
+            {momentum.map((team, index) => (
+              <div className="rank-row" key={team[0]}>
+                <span>{index + 1}. {team[0]}</span>
+                <strong>{team[1]}</strong>
+              </div>
+            ))}
+          </div>
 
-          {loading ? (
-            <p>Loading matches...</p>
-          ) : matches.length === 0 ? (
-            <p>No matches found.</p>
-          ) : (
-            <ul>
-              {matches.map((match) => (
-                <li key={match.id}>
-                  <strong>{match.home_team}</strong>
-                  {" vs "}
-                  <strong>{match.away_team}</strong>
+          <div className="card">
+            <h3>❤️ Fan Mood Tracker</h3>
+            {moods.map((item) => (
+              <div className="mood-row" key={item[0]}>
+                <span>{item[0]}</span>
+                <strong className={`mood ${item[2]}`}>{item[1]}</strong>
+              </div>
+            ))}
+          </div>
 
-                  {match.match_date && (
-                    <>
-                      {" — "}
-                      {new Date(
-                        match.match_date
-                      ).toLocaleDateString()}
-                    </>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
+          <div className="card">
+            <h3>😂 Chaos Meter</h3>
+            {chaos.map((club) => (
+              <div className="chaos-row" key={club[0]}>
+                <span>{club[0]}</span>
+                <div className="bar">
+                  <div style={{ width: `${club[1]}%` }} />
+                </div>
+                <strong>{club[1]}</strong>
+              </div>
+            ))}
+          </div>
 
-        <section className="card subscribe">
-          <h2>📩 Subscribe to Daily Briefing</h2>
-
-          <input
-            type="email"
-            placeholder="Enter your email"
-          />
-
-          <button>
-            Subscribe
-          </button>
-        </section>
+          <div className="card subscribe">
+            <h3>📩 Get PitchIntel Daily</h3>
+            <p>5-minute football briefing every morning.</p>
+            <input type="email" placeholder="Enter your email" />
+            <button>Subscribe</button>
+          </div>
+        </aside>
       </main>
     </div>
   );
+}
+
+function getInitials(name = "") {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
 }
