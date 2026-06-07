@@ -55,6 +55,10 @@ export default function App() {
   
   return (
     <div className="app">
+      <nav className="card">
+        <h2>⚽ FootballIntel</h2>
+      </nav>
+      
       <header className="hero">
         <h1>FootballIntel</h1>
         <p>AI-powered football intelligence</p>
