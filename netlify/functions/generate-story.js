@@ -1,31 +1,43 @@
-import OpenAI from "openai";
 import { createClient } from "@supabase/supabase-js";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
-
 const supabase = createClient(
-  process.env.VITE_SUPABASE_URL,
+  process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
-)
+);
 
 export async function handler() {
   try {
-    // 1. Fetch matches from Supabase
+    // Verify Supabase connection
+    const { count, error } = await supabase
+      .from("matches")
+      .select("*", {
+        count: "exact",
+        head: true
+      });
 
-    // 2. Build AI prompt
+    if (error) {
+      throw error;
+    }
 
-    // 3. Generate story with OpenAI
-
-    // 4. Save story to Supabase
-
-    // 5. Return success
+    return {
+      statusCode: 200,
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        success: true,
+        message: "generate-story function works",
+        matchesCount: count ?? 0
+      })
+    };
   } catch (error) {
-    console.error(error);
+    console.error("generate-story error:", error);
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         success: false,
         error: error.message
