@@ -9,7 +9,6 @@ const supabase = createClient(
 export async function handler() {
 try {
 
-```
 const response = await fetch(
   'https://api.football-data.org/v4/competitions/PL/matches',
   {
@@ -67,11 +66,9 @@ return {
     matchesInserted: matches.length
   })
 }
-```
 
 } catch (err) {
 
-```
 console.error(err)
 
 return {
@@ -81,7 +78,6 @@ return {
     error: err.message
   })
 }
-```
 
 }
 }
