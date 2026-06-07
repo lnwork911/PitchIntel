@@ -13,7 +13,6 @@ process.env.SUPABASE_SERVICE_ROLE_KEY
 export async function handler() {
 try {
 
-```
 const { data: matches, error: matchesError } =
   await supabase
     .from("matches")
@@ -71,7 +70,6 @@ Return JSON only:
 }
 `;
 
-```
 const response =
   await openai.chat.completions.create({
     model: "gpt-4.1-mini",
@@ -121,7 +119,6 @@ return {
 
 } catch (error) {
 
-```
 console.error(
   "generate-story error:",
   error
@@ -138,7 +135,6 @@ return {
     error: error.message
   })
 };
-```
 
 }
 }
