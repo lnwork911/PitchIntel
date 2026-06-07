@@ -40,7 +40,6 @@ const matchSummary = matches
   .join("\n");
 
 const prompt = `
-```
 
 You are FootballIntel.
 
@@ -115,7 +114,6 @@ return {
     title: savedArticle.title
   })
 };
-```
 
 } catch (error) {
 
