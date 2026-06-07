@@ -4,6 +4,9 @@ import { supabase } from "./lib/supabase";
 export default function App() {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  const [story, setStory] = useState(null);
+  const [storyLoading, setStoryLoading] = useState(true);
 
   useEffect(() => {
     async function loadMatches() {
@@ -29,6 +32,27 @@ export default function App() {
     loadMatches();
   }, []);
 
+  useEffect(() => {
+    async function loadStory() {
+      const { data, error } = await supabase
+        .from("ai_articles")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+  
+      if (error) {
+        console.error(error);
+      } else {
+        setStory(data);
+      }
+  
+      setStoryLoading(false);
+    }
+  
+    loadStory();
+  }, []);  
+  
   return (
     <div className="app">
       <header className="hero">
@@ -39,19 +63,24 @@ export default function App() {
       <main>
         <section className="card">
           <h2>🔥 Story of the Day</h2>
-
-          <h3>
-            Liverpool's Momentum Is Starting To Feel Real
-          </h3>
-
-          <p>
-            Five wins in six matches have transformed
-            Liverpool from contender to genuine threat.
-            Confidence is growing and rivals are beginning
-            to feel the pressure.
-          </p>
+        
+          {storyLoading ? (
+            <p>Loading story...</p>
+          ) : !story ? (
+            <p>No story found.</p>
+          ) : (
+            <>
+              <h3>{story.title}</h3>
+        
+              <p>{story.summary}</p>
+        
+              <div style={{ marginTop: "12px" }}>
+                {story.content}
+              </div>
+            </>
+          )}
         </section>
-
+        
         <section className="card">
           <h2>📈 Momentum Rankings</h2>
 
