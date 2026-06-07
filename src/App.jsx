@@ -6,6 +6,10 @@ export default function App() {
   const [story, setStory] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [briefing, setBriefing] = useState(null);
+  const [email, setEmail] = useState("");
+  const [subscribeMessage, setSubscribeMessage] = useState("");
+
   useEffect(() => {
     async function loadData() {
       const { data: storyData } = await supabase
@@ -20,11 +24,37 @@ export default function App() {
         .order("match_date", { ascending: true })
         .limit(10);
 
+      const { data: briefingData } = await supabase
+      .from("daily_briefings")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(1);
+
+      setBriefing(briefingData?.[0] || null);
+
       setStory(storyData?.[0] || null);
       setMatches(matchData || []);
       setLoading(false);
     }
 
+    async function handleSubscribe() {
+      setSubscribeMessage("Saving...");
+    
+      const response = await fetch("/.netlify/functions/subscribe", {
+        method: "POST",
+        body: JSON.stringify({ email })
+      });
+    
+      const result = await response.json();
+    
+      if (result.success) {
+        setSubscribeMessage("Subscribed successfully.");
+        setEmail("");
+      } else {
+        setSubscribeMessage(result.error || "Subscription failed.");
+      }
+    }    
+    
     loadData();
   }, []);
 
@@ -169,12 +199,43 @@ export default function App() {
             ))}
           </div>
 
+          <div className="card">
+            <h3>📰 Daily Briefing</h3>
+          
+            {!briefing ? (
+              <p>No briefing generated yet.</p>
+            ) : (
+              <>
+                <h2>{briefing.title}</h2>
+                <p className="hero-summary">{briefing.summary}</p>
+                <div className="article-body">
+                  {briefing.content}
+                </div>
+              </>
+            )}
+          </div>
+
           <div className="card subscribe">
             <h3>📩 Get PitchIntel Daily</h3>
             <p>5-minute football briefing every morning.</p>
-            <input type="email" placeholder="Enter your email" />
-            <button>Subscribe</button>
-          </div>
+          
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          
+            <button onClick={handleSubscribe}>
+              Subscribe
+            </button>
+          
+            {subscribeMessage && (
+              <p className="subscribe-message">
+                {subscribeMessage}
+              </p>
+            )}
+          </div>          
         </aside>
       </main>
     </div>
