@@ -70,13 +70,17 @@ export default function App() {
             <p>No story found.</p>
           ) : (
             <>
-              <h3>{story.title}</h3>
-        
-              <p>{story.summary}</p>
-        
-              <div style={{ marginTop: "12px" }}>
-                {story.content}
-              </div>
+              <h3 className="story-title">
+                {story?.title}
+              </h3>
+              
+              <p className="story-summary">
+                {story?.summary}
+              </p>
+              
+              <div className="story-content">
+                {story?.content}
+              </div>              
             </>
           )}
         </section>
