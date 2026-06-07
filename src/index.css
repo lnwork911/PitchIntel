@@ -334,3 +334,13 @@ body {
     display: none;
   }
 }
+.subscribe-message {
+  margin-top: 12px;
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+.subscribe input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
