@@ -30,10 +30,10 @@ export default function App() {
       .order("created_at", { ascending: false })
       .limit(1);
 
-      setBriefing(briefingData?.[0] || null);
 
       setStory(storyData?.[0] || null);
       setMatches(matchData || []);
+      setBriefing(briefingData?.[0] || null);
       setLoading(false);
     }
 
