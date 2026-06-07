@@ -13,7 +13,7 @@ process.env.SUPABASE_SERVICE_ROLE_KEY
 export async function handler() {
 try {
 
-const { data: matches, error: matchesError } =
+const { data: matches, error } =
   await supabase
     .from("matches")
     .select("*")
@@ -22,22 +22,21 @@ const { data: matches, error: matchesError } =
     })
     .limit(10);
 
-if (matchesError) {
-  throw matchesError;
-}
+if (error) throw error;
 
-if (!matches || matches.length === 0) {
+if (!matches?.length) {
   throw new Error(
-    "No matches found in database"
+    "No matches found"
   );
 }
 
-const matchSummary = matches
-  .map(
-    (m) =>
-      `${m.home_team} ${m.home_score ?? "-"}-${m.away_score ?? "-"} ${m.away_team}`
-  )
-  .join("\n");
+const matchSummary =
+  matches
+    .map(
+      (m) =>
+        `${m.home_team} ${m.home_score ?? "-"}-${m.away_score ?? "-"} ${m.away_team}`
+    )
+    .join("\n");
 
 const prompt = `
 
@@ -48,28 +47,27 @@ Write an original football article.
 Requirements:
 
 * Human sounding
-* Professional football analyst
-* No plagiarism
-* No fake quotes
-* No made-up injuries
-* Explain why the results matter
+* The Athletic style
+* Explain why it matters
 * Explain fan emotions
 * Explain future implications
+* No fake quotes
+* No fake injuries
 
-Recent matches:
+Recent Matches:
 
 ${matchSummary}
 
-Return JSON only:
+Return JSON:
 
 {
-"title": "",
-"summary": "",
-"content": ""
+"title":"",
+"summary":"",
+"content":""
 }
 `;
 
-const response =
+const completion =
   await openai.chat.completions.create({
     model: "gpt-4.1-mini",
     messages: [
@@ -78,61 +76,60 @@ const response =
         content: prompt
       }
     ],
-    temperature: 0.8
+    response_format: {
+      type: "json_object"
+    }
   });
 
-const raw =
-  response.choices[0].message.content;
+const article =
+  JSON.parse(
+    completion.choices[0]
+      .message.content
+  );
 
-const article = JSON.parse(raw);
-
-const { data: savedArticle, error: insertError } =
+const {
+  data: insertedArticle,
+  error: insertError
+} =
   await supabase
     .from("ai_articles")
     .insert({
       title: article.title,
       summary: article.summary,
       content: article.content,
-      article_type: "story_of_the_day"
+      article_type:
+        "story_of_the_day"
     })
     .select()
     .single();
 
-if (insertError) {
+if (insertError)
   throw insertError;
-}
 
 return {
   statusCode: 200,
-  headers: {
-    "Content-Type":
-      "application/json"
-  },
   body: JSON.stringify({
     success: true,
-    articleId: savedArticle.id,
-    title: savedArticle.title
+    articleId:
+      insertedArticle.id,
+    title:
+      insertedArticle.title
   })
 };
 
-} catch (error) {
+} catch (err) {
 
-console.error(
-  "generate-story error:",
-  error
-);
+console.error(err);
 
 return {
   statusCode: 500,
-  headers: {
-    "Content-Type":
-      "application/json"
-  },
   body: JSON.stringify({
     success: false,
-    error: error.message
+    error: err.message
   })
 };
 
+
 }
 }
+
