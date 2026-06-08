@@ -33,7 +33,7 @@ export default function App() {
 
       setStory(storyData?.[0] || null);
       setMatches(matchData || []);
-      setBriefing(briefingData?.[0] || null);
+      //setBriefing(briefingData?.[0] || null);
       setLoading(false);
     }
 
@@ -198,7 +198,7 @@ export default function App() {
               </div>
             ))}
           </div>
-
+          /*
           <div className="card">
             <h3>📰 Daily Briefing</h3>
           
@@ -214,6 +214,7 @@ export default function App() {
               </>
             )}
           </div>
+          */
 
           <div className="card subscribe">
             <h3>📩 Get PitchIntel Daily</h3>
