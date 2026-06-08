@@ -24,12 +24,13 @@ export default function App() {
         .order("match_date", { ascending: true })
         .limit(10);
 
+      /*
       const { data: briefingData } = await supabase
       .from("daily_briefings")
       .select("*")
       .order("created_at", { ascending: false })
       .limit(1);
-
+      */
 
       setStory(storyData?.[0] || null);
       setMatches(matchData || []);
@@ -37,6 +38,7 @@ export default function App() {
       setLoading(false);
     }
 
+    /*
     async function handleSubscribe() {
       setSubscribeMessage("Saving...");
     
@@ -53,7 +55,8 @@ export default function App() {
       } else {
         setSubscribeMessage(result.error || "Subscription failed.");
       }
-    }    
+    }
+    */
     
     loadData();
   }, []);
@@ -216,6 +219,7 @@ export default function App() {
           </div>
           */
 
+          /*
           <div className="card subscribe">
             <h3>📩 Get PitchIntel Daily</h3>
             <p>5-minute football briefing every morning.</p>
@@ -237,6 +241,8 @@ export default function App() {
               </p>
             )}
           </div>          
+          */
+          
         </aside>
       </main>
     </div>
