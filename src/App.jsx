@@ -186,6 +186,7 @@ return (
         </section>
 
         <aside className="right-column">
+          /*
           <div className="card">
             <h3>📊 Platform Metrics</h3>
           
@@ -204,6 +205,7 @@ return (
               <strong>{matches.length}</strong>
             </div>
           </div>
+          */
           
           <div className="card">
             <h3>📈 Momentum Rankings</h3>
