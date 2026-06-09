@@ -30,7 +30,6 @@ export default function App() {
       .order("created_at", { ascending: false })
       .limit(1);
       
-      /*
       async function handleSubscribe() {
         setSubscribeMessage("Saving...");
       
@@ -48,7 +47,7 @@ export default function App() {
           setSubscribeMessage(result.error || "Subscription failed.");
         }
       }
-      */
+      
       setStory(storyData?.[0] || null);
       setMatches(matchData || []);
       setBriefing(briefingData?.[0] || null);
