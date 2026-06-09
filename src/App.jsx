@@ -24,13 +24,12 @@ export default function App() {
         .order("match_date", { ascending: true })
         .limit(10);
 
-      /*
       const { data: briefingData } = await supabase
       .from("daily_briefings")
       .select("*")
       .order("created_at", { ascending: false })
       .limit(1);
-      */
+      
       /*
       async function handleSubscribe() {
         setSubscribeMessage("Saving...");
