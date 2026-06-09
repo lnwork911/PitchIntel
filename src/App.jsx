@@ -6,12 +6,10 @@ export default function App() {
   const [story, setStory] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  /*
   const [briefing, setBriefing] = useState(null);
   const [email, setEmail] = useState("");
   const [subscribeMessage, setSubscribeMessage] = useState("");
-  */
-
+  
   useEffect(() => {
     async function loadData() {
       const { data: storyData } = await supabase
