@@ -198,6 +198,22 @@ return (
               </div>
             ))}
           </div>
+
+          <div className="card">
+            <h3>📰 Daily Briefing</h3>
+          
+            {!briefing ? (
+              <p>No briefing generated yet.</p>
+            ) : (
+              <>
+                <h2>{briefing.title}</h2>
+                <p className="hero-summary">{briefing.summary}</p>
+                <div className="article-body">
+                  {briefing.content}
+                </div>
+              </>
+            )}
+          </div>
           
         </aside>
       </main>
