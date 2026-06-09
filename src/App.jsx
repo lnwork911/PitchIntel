@@ -51,7 +51,7 @@ export default function App() {
       */
       setStory(storyData?.[0] || null);
       setMatches(matchData || []);
-      //setBriefing(briefingData?.[0] || null);
+      setBriefing(briefingData?.[0] || null);
       setLoading(false);
     }
    
