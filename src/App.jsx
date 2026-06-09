@@ -186,27 +186,6 @@ return (
         </section>
 
         <aside className="right-column">
-          /*
-          <div className="card">
-            <h3>📊 Platform Metrics</h3>
-          
-            <div className="metric-row">
-              <span>Stories</span>
-              <strong>{storiesCount}</strong>
-            </div>
-          
-            <div className="metric-row">
-              <span>Subscribers</span>
-              <strong>{subscriberCount}</strong>
-            </div>
-          
-            <div className="metric-row">
-              <span>Matches</span>
-              <strong>{matches.length}</strong>
-            </div>
-          </div>
-          */
-          
           <div className="card">
             <h3>📈 Momentum Rankings</h3>
             {momentum.map((team, index) => (
