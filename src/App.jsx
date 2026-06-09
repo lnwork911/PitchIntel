@@ -6,9 +6,11 @@ export default function App() {
   const [story, setStory] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  /*
   const [briefing, setBriefing] = useState(null);
   const [email, setEmail] = useState("");
   const [subscribeMessage, setSubscribeMessage] = useState("");
+  */
 
   useEffect(() => {
     async function loadData() {
@@ -31,33 +33,31 @@ export default function App() {
       .order("created_at", { ascending: false })
       .limit(1);
       */
-
+      /*
+      async function handleSubscribe() {
+        setSubscribeMessage("Saving...");
+      
+        const response = await fetch("/.netlify/functions/subscribe", {
+          method: "POST",
+          body: JSON.stringify({ email })
+        });
+      
+        const result = await response.json();
+      
+        if (result.success) {
+          setSubscribeMessage("Subscribed successfully.");
+          setEmail("");
+        } else {
+          setSubscribeMessage(result.error || "Subscription failed.");
+        }
+      }
+      */
       setStory(storyData?.[0] || null);
       setMatches(matchData || []);
       //setBriefing(briefingData?.[0] || null);
       setLoading(false);
     }
-
-    /*
-    async function handleSubscribe() {
-      setSubscribeMessage("Saving...");
-    
-      const response = await fetch("/.netlify/functions/subscribe", {
-        method: "POST",
-        body: JSON.stringify({ email })
-      });
-    
-      const result = await response.json();
-    
-      if (result.success) {
-        setSubscribeMessage("Subscribed successfully.");
-        setEmail("");
-      } else {
-        setSubscribeMessage(result.error || "Subscription failed.");
-      }
-    }
-    */
-    
+   
     loadData();
   }, []);
 
