@@ -31,22 +31,43 @@ export default function App() {
       .limit(1);
       
       async function handleSubscribe() {
-        setSubscribeMessage("Saving...");
-      
-        const response = await fetch("/.netlify/functions/subscribe", {
-          method: "POST",
-          body: JSON.stringify({ email })
-        });
-      
-        const result = await response.json();
-      
-        if (result.success) {
-          setSubscribeMessage("Subscribed successfully.");
-          setEmail("");
-        } else {
-          setSubscribeMessage(result.error || "Subscription failed.");
-        }
+
+  console.log("EMAIL:", email);
+
+  try {
+
+    const response = await fetch(
+      "/.netlify/functions/subscribe",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email
+        })
       }
+    );
+
+    const result =
+      await response.json();
+
+    console.log(result);
+
+    setSubscribeMessage(
+      result.message ||
+      result.error
+    );
+
+  } catch(err) {
+
+    console.error(err);
+
+    setSubscribeMessage(
+      "Failed"
+    );
+  }
+}
       
       setStory(storyData?.[0] || null);
       setMatches(matchData || []);
