@@ -213,7 +213,28 @@ return (
               </>
             )}
           </div>
+
+          <div className="card subscribe">
+            <h3>📩 Get PitchIntel Daily</h3>
+            <p>5-minute football briefing every morning.</p>
           
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          
+            <button onClick={handleSubscribe}>
+              Subscribe
+            </button>
+          
+            {subscribeMessage && (
+              <p className="subscribe-message">
+                {subscribeMessage}
+              </p>
+            )}
+          </div>
         </aside>
       </main>
 </div>
