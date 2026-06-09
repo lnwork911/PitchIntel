@@ -29,46 +29,7 @@ export default function App() {
       .select("*")
       .order("created_at", { ascending: false })
       .limit(1);
-      
-      async function handleSubscribe() {
-
-  console.log("EMAIL:", email);
-
-  try {
-
-    const response = await fetch(
-      "/.netlify/functions/subscribe",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email
-        })
-      }
-    );
-
-    const result =
-      await response.json();
-
-    console.log(result);
-
-    setSubscribeMessage(
-      result.message ||
-      result.error
-    );
-
-  } catch(err) {
-
-    console.error(err);
-
-    setSubscribeMessage(
-      "Failed"
-    );
-  }
-}
-      
+            
       setStory(storyData?.[0] || null);
       setMatches(matchData || []);
       setBriefing(briefingData?.[0] || null);
@@ -78,6 +39,45 @@ export default function App() {
     loadData();
   }, []);
 
+  async function handleSubscribe() {
+  
+    console.log("EMAIL:", email);
+  
+    try {
+  
+      const response = await fetch(
+        "/.netlify/functions/subscribe",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            email
+          })
+        }
+      );
+  
+      const result =
+        await response.json();
+  
+      console.log(result);
+  
+      setSubscribeMessage(
+        result.message ||
+        result.error
+      );
+  
+    } catch(err) {
+  
+      console.error(err);
+  
+      setSubscribeMessage(
+        "Failed"
+      );
+    }
+  }  
+  
   const momentum = [
     ["Liverpool", "88", "up"],
     ["Arsenal", "84", "up"],
