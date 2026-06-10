@@ -136,7 +136,7 @@ return (
       <div className="ticker">
         <span>BREAKING</span>
         <p>Villa stun City • Arsenal stay alive • Chelsea pressure grows • Title race tightens</p>
-</div>
+      </div>
 
       <nav className="navbar">
         <div className="brand">
@@ -238,9 +238,9 @@ return (
               <strong>{matches.length}</strong>
             </div>
           </div>          
-          
-          <div className="card">
-          
+
+          /*
+          <div className="card">          
             <h3>
               📰 Recent Stories
             </h3>
@@ -252,11 +252,11 @@ return (
                 className="archive-item"
               >
                 {article.title}
-              </div>
-          
+              </div>          
             ))}
+          </div> 
+          */
           
-          </div>          
           <div className="card">
             <h3>📈 Momentum Rankings</h3>
             {momentum.map((team, index) => (
