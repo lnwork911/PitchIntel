@@ -50,6 +50,15 @@ const [subscriberCount, setSubscriberCount] = useState(0);
             head: true
         });
 
+      const { data: articles } =
+        await supabase
+         .from("ai_articles")
+         .select("*")
+         .order("created_at", {
+           ascending:false
+         })
+         .limit(5);
+
       setSubscriberCount(subscribersTotal || 0);      
       setStoriesCount(storiesTotal || 0);     
       setStory(storyData?.[0] || null);
