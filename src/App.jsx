@@ -9,6 +9,10 @@ export default function App() {
   const [briefing, setBriefing] = useState(null);
   const [email, setEmail] = useState("");
   const [subscribeMessage, setSubscribeMessage] = useState("");
+
+const [storiesCount, setStoriesCount] = useState(0);
+const [subscriberCount, setSubscriberCount] = useState(0);
+//const [matches, setMatches] = useState([]);  
   
   useEffect(() => {
     async function loadData() {
@@ -29,7 +33,25 @@ export default function App() {
       .select("*")
       .order("created_at", { ascending: false })
       .limit(1);
-            
+
+      const { count: subscribersTotal } =
+        await supabase
+          .from("subscribers")
+          .select("*", {
+            count: "exact",
+            head: true
+        });
+      
+      const { count: storiesTotal } =
+        await supabase
+          .from("ai_articles")
+          .select("*", {
+            count: "exact",
+            head: true
+        });
+
+      setSubscriberCount(subscribersTotal || 0);      
+      setStoriesCount(storiesTotal || 0);     
       setStory(storyData?.[0] || null);
       setMatches(matchData || []);
       setBriefing(briefingData?.[0] || null);
@@ -186,6 +208,25 @@ return (
         </section>
 
         <aside className="right-column">
+
+<div className="card">
+  <h3>📊 Platform Metrics</h3>
+
+  <div className="metric-row">
+    <span>Stories</span>
+    <strong>{storiesCount}</strong>
+  </div>
+
+  <div className="metric-row">
+    <span>Subscribers</span>
+    <strong>{subscriberCount}</strong>
+  </div>
+
+  <div className="metric-row">
+    <span>Matches</span>
+    <strong>{matches.length}</strong>
+  </div>
+</div>          
           <div className="card">
             <h3>📈 Momentum Rankings</h3>
             {momentum.map((team, index) => (
