@@ -18,6 +18,20 @@ export default function App() {
   
   useEffect(() => {
     async function loadData() {
+
+      const { data: sourceData, error: sourceError } =
+        await supabase
+          .from("news_sources")
+          .select("*")
+          .order("published_at", { ascending: false })
+          .limit(5);
+      
+      if (sourceError) {
+        console.error(sourceError);
+      }
+      
+      setSources(sourceData || []);
+          
       const { data: storyData } = await supabase
         .from("ai_articles")
         .select("*")
@@ -118,19 +132,6 @@ setArticles(articlesData || []);
       );
     }
   }  
-
-  const { data: sourceData, error: sourceError } =
-    await supabase
-      .from("news_sources")
-      .select("*")
-      .order("published_at", { ascending: false })
-      .limit(5);
-  
-  if (sourceError) {
-    console.error(sourceError);
-  }
-  
-  setSources(sourceData || []);
   
   const momentum = [
     ["Liverpool", "88", "up"],
