@@ -51,14 +51,20 @@ export default function App() {
             head: true
         });
 
-      const { data: articles } =
-        await supabase
-         .from("ai_articles")
-         .select("*")
-         .order("created_at", {
-           ascending:false
-         })
-         .limit(5);
+const { data: articlesData, error: articlesError } =
+  await supabase
+    .from("ai_articles")
+    .select("*")
+    .order("created_at", {
+      ascending: false
+    })
+    .limit(5);
+
+if (articlesError) {
+  console.error(articlesError);
+}
+
+setArticles(articlesData || []);
       
 
       setSubscriberCount(subscribersTotal || 0);      
