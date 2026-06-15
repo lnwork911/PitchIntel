@@ -263,11 +263,12 @@ return (
 <div className="card worldcup-card">
   <h3>🌎 World Cup 2026 Watch</h3>
 
-  <div className="rank-row">
 
 <p className="mini-label">
   AI Power Rankings
 </p>    
+  
+  <div className="rank-row">
     <span>Argentina</span>
     <strong>#1</strong>
   </div>
