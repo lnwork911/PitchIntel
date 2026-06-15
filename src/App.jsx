@@ -223,22 +223,6 @@ return (
      
 
           
-          <div className="card">          
-            <h3>
-              📰 Recent Stories
-            </h3>
-          
-            {articles.map(article => (
-          
-              <div
-                key={article.id}
-                className="archive-item"
-              >
-                {article.title}
-              </div>          
-            ))}
-          </div> 
-           
           
           <div className="card">
             <h3>📈 Momentum Rankings</h3>
