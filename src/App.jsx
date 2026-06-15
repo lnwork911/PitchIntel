@@ -10,9 +10,9 @@ export default function App() {
   const [email, setEmail] = useState("");
   const [subscribeMessage, setSubscribeMessage] = useState("");
 
-//const [storiesCount, setStoriesCount] = useState(0);
-//const [subscriberCount, setSubscriberCount] = useState(0);
-//const [matches, setMatches] = useState([]);  
+const [storiesCount, setStoriesCount] = useState(0);
+const [subscriberCount, setSubscriberCount] = useState(0);
+const [matches, setMatches] = useState([]);  
   
   useEffect(() => {
     async function loadData() {
