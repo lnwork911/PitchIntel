@@ -13,6 +13,8 @@ export default function App() {
   const [storiesCount, setStoriesCount] = useState(0);
   const [subscriberCount, setSubscriberCount] = useState(0);
   const [articles, setArticles] = useState([]);
+
+  const [sources, setSources] = useState([]);
   
   useEffect(() => {
     async function loadData() {
@@ -116,6 +118,19 @@ setArticles(articlesData || []);
       );
     }
   }  
+
+  const { data: sourceData, error: sourceError } =
+    await supabase
+      .from("news_sources")
+      .select("*")
+      .order("published_at", { ascending: false })
+      .limit(5);
+  
+  if (sourceError) {
+    console.error(sourceError);
+  }
+  
+  setSources(sourceData || []);
   
   const momentum = [
     ["Liverpool", "88", "up"],
@@ -333,21 +348,27 @@ return (
 <div className="card">
   <h3>🧠 Source Intelligence</h3>
 
-  <div className="source-item">
-    <strong>BBC Sport</strong>
+  {sources.length === 0 ? (
+    <p>No source intelligence yet. Run sync-news.</p>
+  ) : (
+    sources.map((source) => (
+      <div key={source.id} className="source-item">
+        <strong>{source.source}</strong>
+        <p>{source.title}</p>
 
-    <p>
-      Arsenal injury concerns continue.
-    </p>
-  </div>
-
-  <div className="source-item">
-    <strong>Guardian</strong>
-
-    <p>
-      Liverpool title momentum grows.
-    </p>
-  </div>
+        {source.url && (
+          <a
+            href={source.url}
+            target="_blank"
+            rel="noreferrer"
+            className="source-link"
+          >
+            Read original →
+          </a>
+        )}
+      </div>
+    ))
+  )}
 </div>
           
 <div className="card">          
