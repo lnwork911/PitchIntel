@@ -11,8 +11,8 @@ export default function App() {
   const [subscribeMessage, setSubscribeMessage] = useState("");
 
 const [storiesCount, setStoriesCount] = useState(0);
-const [subscriberCount, setSubscriberCount] = useState(0);
-const [matches, setMatches] = useState([]);  
+//const [subscriberCount, setSubscriberCount] = useState(0);
+//const [matches, setMatches] = useState([]);  
   
   useEffect(() => {
     async function loadData() {
