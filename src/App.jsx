@@ -263,10 +263,9 @@ return (
 <div className="card worldcup-card">
   <h3>🌎 World Cup 2026 Watch</h3>
 
-
-<p className="mini-label">
-  AI Power Rankings
-</p>    
+  <p className="mini-label">
+    AI Power Rankings
+  </p>    
   
   <div className="rank-row">
     <span>Argentina</span>
@@ -291,33 +290,47 @@ return (
   <div className="rank-row">
     <span>Brazil</span>
     <strong>#5</strong>
-  </div>
-  
+  </div>  
 </div>          
 
 <div className="card">
+  <h3>📰 Daily Briefing</h3>
+
+  {!briefing ? (
+    <p>No briefing generated yet.</p>
+  ) : (
+    <>
+      <h2>{briefing.title}</h2>
+      <p className="hero-summary">{briefing.summary}</p>
+      <div className="article-body">
+        {briefing.content}
+      </div>
+    </>
+  )}
+</div>
+  
+<div className="card">
   <h3>📊 Platform Metrics</h3>
+
+  <div className="metric-grid">
+    <div className="metric-card">
+      <h2>{storiesCount}</h2>
+      <p>Stories</p>
+    </div>
+
+    <div className="metric-card">
+      <h2>{subscriberCount}</h2>
+      <p>Subscribers</p>
+    </div>
+
+    <div className="metric-card">
+      <h2>{matches.length}</h2>
+      <p>Matches</p>
+    </div>
+  </div>  
 </div> 
 
-          <div className="card">
-            <h3>📰 Daily Briefing</h3>
-          
-            {!briefing ? (
-              <p>No briefing generated yet.</p>
-            ) : (
-              <>
-                <h2>{briefing.title}</h2>
-                <p className="hero-summary">{briefing.summary}</p>
-                <div className="article-body">
-                  {briefing.content}
-                </div>
-              </>
-            )}
-          </div>
-  
-
-
-  <div className="card">
+<div className="card">
   <h3>🧠 Source Intelligence</h3>
 
   <div className="source-item">
@@ -335,50 +348,27 @@ return (
       Liverpool title momentum grows.
     </p>
   </div>
-    
-  <div className="metric-grid">
-
-    <div className="metric-card">
-      <h2>{storiesCount}</h2>
-      <p>Stories</p>
-    </div>
-
-    <div className="metric-card">
-      <h2>{subscriberCount}</h2>
-      <p>Subscribers</p>
-    </div>
-
-    <div className="metric-card">
-      <h2>{matches.length}</h2>
-      <p>Matches</p>
-    </div>
-
-  </div>
 </div>
           
-          <div className="card">          
-            <h3>
-              📰 Recent Stories
-            </h3>
-          
-            {articles.map(article => (
-          
-<div
-  key={article.id}
-  className="archive-item"
->
-  <h4>{article.title}</h4>
+<div className="card">          
+  <h3>
+    📰 Recent Stories
+  </h3>
 
-  <p>
-    {article.summary ||
-      "AI football intelligence story"}
-  </p>
-</div>
-  
-            ))}
-          </div> 
-
-          
+  {articles.map(article => (          
+      <div
+        key={article.id}
+        className="archive-item"
+      >
+        <h4>{article.title}</h4>
+      
+        <p>
+          {article.summary ||
+            "AI football intelligence story"}
+        </p>
+      </div>
+    ))}
+</div> 
           
           <div className="card">
             <h3>📈 Momentum Rankings</h3>
