@@ -51,14 +51,20 @@ export default function App() {
             head: true
         });
 
-      const { data: articles } =
-        await supabase
-         .from("ai_articles")
-         .select("*")
-         .order("created_at", {
-           ascending:false
-         })
-         .limit(5);
+const { data: articlesData, error: articlesError } =
+  await supabase
+    .from("ai_articles")
+    .select("*")
+    .order("created_at", {
+      ascending: false
+    })
+    .limit(5);
+
+if (articlesError) {
+  console.error(articlesError);
+}
+
+setArticles(articlesData || []);
       
 
       setSubscriberCount(subscribersTotal || 0);      
@@ -172,7 +178,29 @@ return (
           ))}
         </div>
       </section>
+<section className="market-strip">
 
+  <div className="market-item">
+    ⚽ EPL
+    <strong>Liverpool ↑</strong>
+  </div>
+
+  <div className="market-item">
+    🌎 WC26
+    <strong>Argentina ↑</strong>
+  </div>
+
+  <div className="market-item">
+    ❤️ Fan Mood
+    <strong>Positive</strong>
+  </div>
+
+  <div className="market-item">
+    📈 Momentum
+    <strong>Rising</strong>
+  </div>
+
+</section>
       <main className="layout">
         <section className="left-column">
           <div className="card">
@@ -207,10 +235,22 @@ return (
                         : "Date TBD"}
                     </p>
 
-                    <div className="match-metrics">
-                      <span>Importance 86</span>
-                      <span>Upset Risk 28%</span>
-                    </div>
+
+<div className="match-score">
+
+  <span className="score-tag">
+    Importance 86
+  </span>
+
+  <span className="score-tag">
+    Upset Risk 28%
+  </span>
+
+</div>
+
+<p className="storyline">
+  Key storyline developing.
+</p>                    
                   </div>
                 ))}
               </div>
@@ -220,42 +260,115 @@ return (
 
         <aside className="right-column">
 
-          <div className="card">
-            <h3>📊 Platform Metrics</h3>
-          
-            <div className="metric-row">
-              <span>Stories</span>
-              <strong>{storiesCount}</strong>
-            </div>
-          
-            <div className="metric-row">
-              <span>Subscribers</span>
-              <strong>{subscriberCount}</strong>
-            </div>
-          
-            <div className="metric-row">
-              <span>Matches</span>
-              <strong>{matches.length}</strong>
-            </div>
-          </div>          
-     
-          <div className="card">          
-            <h3>
-              📰 Recent Stories
-            </h3>
-          
-            {articles.map(article => (
-          
-              <div
-                key={article.id}
-                className="archive-item"
-              >
-                {article.title}
-              </div>          
-            ))}
-          </div> 
+<div className="card worldcup-card">
+  <h3>🌎 World Cup 2026 Watch</h3>
 
+  <p className="mini-label">
+    AI Power Rankings
+  </p>    
+  
+  <div className="rank-row">
+    <span>Argentina</span>
+    <strong>#1</strong>
+  </div>
+
+  <div className="rank-row">
+    <span>France</span>
+    <strong>#2</strong>
+  </div>
+
+  <div className="rank-row">
+    <span>Spain</span>
+    <strong>#3</strong>
+  </div>
+
+  <div className="rank-row">
+    <span>England</span>
+    <strong>#4</strong>
+  </div>
+
+  <div className="rank-row">
+    <span>Brazil</span>
+    <strong>#5</strong>
+  </div>  
+</div>          
+
+<div className="card">
+  <h3>📰 Daily Briefing</h3>
+
+  {!briefing ? (
+    <p>No briefing generated yet.</p>
+  ) : (
+    <>
+      <h2>{briefing.title}</h2>
+      <p className="hero-summary">{briefing.summary}</p>
+      <div className="article-body">
+        {briefing.content}
+      </div>
+    </>
+  )}
+</div>
+  
+<div className="card">
+  <h3>📊 Platform Metrics</h3>
+
+  <div className="metric-grid">
+    <div className="metric-card">
+      <h2>{storiesCount}</h2>
+      <p>Stories</p>
+    </div>
+
+    <div className="metric-card">
+      <h2>{subscriberCount}</h2>
+      <p>Subscribers</p>
+    </div>
+
+    <div className="metric-card">
+      <h2>{matches.length}</h2>
+      <p>Matches</p>
+    </div>
+  </div>  
+</div> 
+
+<div className="card">
+  <h3>🧠 Source Intelligence</h3>
+
+  <div className="source-item">
+    <strong>BBC Sport</strong>
+
+    <p>
+      Arsenal injury concerns continue.
+    </p>
+  </div>
+
+  <div className="source-item">
+    <strong>Guardian</strong>
+
+    <p>
+      Liverpool title momentum grows.
+    </p>
+  </div>
+</div>
           
+<div className="card">          
+  <h3>
+    📰 Recent Stories
+  </h3>
+
+  {articles.map(article => (          
+      <div
+        key={article.id}
+        className="archive-item"
+      >
+        <h4>{article.title}</h4>
+      
+        <p>
+          {article.summary ||
+            "AI football intelligence story"}
+        </p>
+      </div>
+    ))}
+</div> 
           
           <div className="card">
             <h3>📈 Momentum Rankings</h3>
@@ -290,25 +403,17 @@ return (
             ))}
           </div>
 
-          <div className="card">
-            <h3>📰 Daily Briefing</h3>
-          
-            {!briefing ? (
-              <p>No briefing generated yet.</p>
-            ) : (
-              <>
-                <h2>{briefing.title}</h2>
-                <p className="hero-summary">{briefing.summary}</p>
-                <div className="article-body">
-                  {briefing.content}
-                </div>
-              </>
-            )}
-          </div>
 
 <div className="card subscribe">
   <h3>📩 Get PitchIntel Daily</h3>
-  <p>5-minute football briefing every morning.</p>
+  <p>
+  Join football fans receiving
+  a 5-minute intelligence briefing
+  every morning.
+</p>
+<div className="subscriber-count">
+  {subscriberCount}+ readers
+</div>  
 
   <input
     type="email"
