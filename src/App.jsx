@@ -10,8 +10,8 @@ export default function App() {
   const [email, setEmail] = useState("");
   const [subscribeMessage, setSubscribeMessage] = useState("");
 
-const [storiesCount, setStoriesCount] = useState(0);
-const [subscriberCount, setSubscriberCount] = useState(0);
+//const [storiesCount, setStoriesCount] = useState(0);
+//const [subscriberCount, setSubscriberCount] = useState(0);
 //const [matches, setMatches] = useState([]);  
   
   useEffect(() => {
@@ -61,8 +61,8 @@ const [subscriberCount, setSubscriberCount] = useState(0);
          .limit(5);
       
 
-      setSubscriberCount(subscribersTotal || 0);      
-      setStoriesCount(storiesTotal || 0);     
+      //setSubscriberCount(subscribersTotal || 0);      
+      //setStoriesCount(storiesTotal || 0);     
       setStory(storyData?.[0] || null);
       setMatches(matchData || []);
       setBriefing(briefingData?.[0] || null);
@@ -220,6 +220,7 @@ return (
 
         <aside className="right-column">
 
+          /*
           <div className="card">
             <h3>📊 Platform Metrics</h3>
           
@@ -238,7 +239,7 @@ return (
               <strong>{matches.length}</strong>
             </div>
           </div>          
-
+*/
           /*
           <div className="card">          
             <h3>
