@@ -12,7 +12,6 @@ export default function App() {
 
 const [storiesCount, setStoriesCount] = useState(0);
 const [subscriberCount, setSubscriberCount] = useState(0);
-//const [matches, setMatches] = useState([]);  
   
   useEffect(() => {
     async function loadData() {
@@ -62,7 +61,7 @@ const [subscriberCount, setSubscriberCount] = useState(0);
       
 
       setSubscriberCount(subscribersTotal || 0);      
-      //setStoriesCount(storiesTotal || 0);     
+      setStoriesCount(storiesTotal || 0);     
       setStory(storyData?.[0] || null);
       setMatches(matchData || []);
       setBriefing(briefingData?.[0] || null);
