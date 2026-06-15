@@ -12,6 +12,7 @@ export default function App() {
 
   const [storiesCount, setStoriesCount] = useState(0);
   const [subscriberCount, setSubscriberCount] = useState(0);
+  const [articles, setArticles] = useState([]);
   
   useEffect(() => {
     async function loadData() {
