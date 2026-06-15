@@ -235,10 +235,6 @@ return (
                         : "Date TBD"}
                     </p>
 
-                    <div className="match-metrics">
-                      <span>Importance 86</span>
-                      <span>Upset Risk 28%</span>
-                    </div>
 
 <div className="match-score">
 
@@ -268,6 +264,10 @@ return (
   <h3>🌎 World Cup 2026 Watch</h3>
 
   <div className="rank-row">
+
+<p className="mini-label">
+  AI Power Rankings
+</p>    
     <span>Argentina</span>
     <strong>#1</strong>
   </div>
@@ -291,10 +291,12 @@ return (
     <span>Brazil</span>
     <strong>#5</strong>
   </div>
+  
 </div>          
 
 <div className="card">
   <h3>📊 Platform Metrics</h3>
+</div> 
 
           <div className="card">
             <h3>📰 Daily Briefing</h3>
@@ -312,6 +314,8 @@ return (
             )}
           </div>
   
+
+
   <div className="card">
   <h3>🧠 Source Intelligence</h3>
 
@@ -330,8 +334,7 @@ return (
       Liverpool title momentum grows.
     </p>
   </div>
-</div>
-  
+    
   <div className="metric-grid">
 
     <div className="metric-card">
@@ -417,6 +420,9 @@ return (
   a 5-minute intelligence briefing
   every morning.
 </p>
+<div className="subscriber-count">
+  {subscriberCount}+ readers
+</div>  
 
   <input
     type="email"
