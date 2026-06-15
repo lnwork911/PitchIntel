@@ -42,7 +42,7 @@ const [subscriberCount, setSubscriberCount] = useState(0);
             head: true
         });
       
-      /*
+      
       const { count: storiesTotal } =
         await supabase
           .from("ai_articles")
@@ -59,7 +59,7 @@ const [subscriberCount, setSubscriberCount] = useState(0);
            ascending:false
          })
          .limit(5);
-      */
+      
 
       setSubscriberCount(subscribersTotal || 0);      
       setStoriesCount(storiesTotal || 0);     
