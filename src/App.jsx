@@ -61,7 +61,7 @@ const [subscriberCount, setSubscriberCount] = useState(0);
          .limit(5);
       
 
-      //setSubscriberCount(subscribersTotal || 0);      
+      setSubscriberCount(subscribersTotal || 0);      
       //setStoriesCount(storiesTotal || 0);     
       setStory(storyData?.[0] || null);
       setMatches(matchData || []);
