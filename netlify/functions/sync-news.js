@@ -21,6 +21,23 @@ export async function handler() {
       }
     ];
 
+    function decodeHtml(text = "") {
+      const entities = {
+        "&amp;": "&",
+        "&quot;": '"',
+        "&#39;": "'",
+        "&lt;": "<",
+        "&gt;": ">"
+      };
+    
+      return Object.entries(entities)
+        .reduce(
+          (str, [entity, char]) =>
+            str.replaceAll(entity, char),
+          text
+        );
+    }  
+
     let inserted = 0;
 
     for (const feed of feeds) {
@@ -48,14 +65,14 @@ export async function handler() {
             source: feed.source,
 
             title:
-              item.title || "",
+              decodeHtml(item.title) || "",
 
             url:
               item.link || "",
 
             summary:
-              item.description ||
-              item.content ||
+              decodeHtml(item.description) ||
+              decodeHtml(item.content) ||
               "",
 
             published_at:
