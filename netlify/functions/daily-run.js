@@ -1,55 +1,56 @@
 export async function handler() {
+  try {
 
-try {
+    const base =
+      process.env.URL ||
+      process.env.DEPLOY_PRIME_URL;
 
-const base =
-  process.env.URL ||
-  process.env.DEPLOY_PRIME_URL;
+    const functions = [
+      "sync-matches",
+      "sync-news",
+      "generate-story",
+      "generate-briefing"
+    ];
 
-const syncResponse =
-  await fetch(
-    `${base}/.netlify/functions/sync-matches`
-  );
+    const results = [];
 
-const storyResponse =
-  await fetch(
-    `${base}/.netlify/functions/generate-story`
-  );
+    for (const fn of functions) {
 
-const briefingResponse =
-  await fetch(
-    `${base}/.netlify/functions/generate-briefing`
-  );
+      const response =
+        await fetch(
+          `${base}/.netlify/functions/${fn}`
+        );
 
-const sync =
-  await syncResponse.json();
+      const data =
+        await response.json();
 
-const story =
-  await storyResponse.json();
+      results.push({
+        function: fn,
+        result: data
+      });
+    }
 
-const briefing =
-  await briefingResponse.json();
+    return {
+      statusCode: 200,
+      headers: {
+        "Content-Type":
+          "application/json"
+      },
+      body: JSON.stringify({
+        success: true,
+        results
+      })
+    };
 
-return {
-  statusCode: 200,
-  body: JSON.stringify({
-    success: true,
-    sync,
-    story,
-    briefing
-  })
-};
+  } catch (error) {
 
-} catch (error) {
-
-return {
-  statusCode: 500,
-  body: JSON.stringify({
-    success: false,
-    error: error.message
-  })
-};
-
-
-}
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        success: false,
+        error:
+          error.message
+      })
+    };
+  }
 }
