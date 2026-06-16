@@ -12,52 +12,71 @@ const supabase = createClient(
 
 export async function handler() {
   try {
-    const { data: matches, error: matchError } = await supabase
-      .from("matches")
-      .select("*")
-      .order("match_date", { ascending: true })
-      .limit(10);
 
-    if (matchError) throw matchError;
+    // Recent matches
 
-    const { data: stories, error: storyError } = await supabase
-      .from("ai_articles")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .limit(3);
+    const { data: matches } =
+      await supabase
+        .from("matches")
+        .select("*")
+        .order(
+          "match_date",
+          { ascending: false }
+        )
+        .limit(10);
 
-    if (storyError) throw storyError;
+    // Recent news
 
-    const matchText = matches
-      ?.map(
-        (m) =>
-          `${m.home_team} vs ${m.away_team} — ${m.status || "scheduled"}`
-      )
-      .join("\n");
+    const { data: news } =
+      await supabase
+        .from("news_sources")
+        .select("*")
+        .order(
+          "published_at",
+          { ascending: false }
+        )
+        .limit(10);
 
-    const storyText = stories
-      ?.map((s) => `${s.title}: ${s.summary}`)
-      .join("\n");
+    const matchSummary =
+      (matches || [])
+        .map(
+          m =>
+            `${m.home_team} ${m.home_score ?? "-"}-${m.away_score ?? "-"} ${m.away_team}`
+        )
+        .join("\n");
+
+    const newsSummary =
+      (news || [])
+        .map(
+          n =>
+            `${n.source}: ${n.title}`
+        )
+        .join("\n");
 
     const prompt = `
 You are PitchIntel.
 
-Create a daily football briefing.
+Using the football results and football news below, create a professional football intelligence briefing.
 
-Style:
-- ESPN energy
-- The Athletic intelligence
-- Tifo explanation
-- Bloomberg-style concise insight
-- Human, emotional, original
+Requirements:
+
+- Human sounding
+- Professional analyst
 - No fake quotes
-- No plagiarism
+- No made-up injuries
+- No made-up facts
+- Explain why developments matter
+- Mention fan impact
+- Mention future implications
+- Mention possible World Cup implications when relevant
 
-Recent stories:
-${storyText}
+Recent Matches:
 
-Upcoming/recent matches:
-${matchText}
+${matchSummary}
+
+Recent News:
+
+${newsSummary}
 
 Return JSON only:
 
@@ -68,51 +87,78 @@ Return JSON only:
 }
 `;
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4.1-mini",
-      messages: [
-        {
-          role: "user",
-          content: prompt
-        }
-      ],
-      response_format: {
-        type: "json_object"
-      }
-    });
+    const response =
+      await openai.chat.completions.create({
+        model: "gpt-4.1-mini",
+        messages: [
+          {
+            role: "user",
+            content: prompt
+          }
+        ],
+        temperature: 0.7
+      });
 
-    const briefing = JSON.parse(
-      completion.choices[0].message.content
-    );
+    const raw =
+      response.choices[0]
+        .message.content;
 
-    const { data: saved, error: insertError } = await supabase
-      .from("daily_briefings")
-      .insert({
-        title: briefing.title,
-        summary: briefing.summary,
-        content: briefing.content
-      })
-      .select()
-      .single();
+    const briefing =
+      JSON.parse(raw);
 
-    if (insertError) throw insertError;
+    const {
+      data: saved,
+      error
+    } =
+      await supabase
+        .from("daily_briefings")
+        .insert({
+          title:
+            briefing.title,
+
+          summary:
+            briefing.summary,
+
+          content:
+            briefing.content
+        })
+        .select()
+        .single();
+
+    if (error) {
+      throw error;
+    }
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type":
+          "application/json"
+      },
       body: JSON.stringify({
         success: true,
-        briefingId: saved.id,
-        title: saved.title
+        briefingId:
+          saved.id
       })
     };
+
   } catch (error) {
-    console.error("generate-briefing error:", error);
+
+    console.error(
+      "generate-briefing error:",
+      error
+    );
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type":
+          "application/json"
+      },
       body: JSON.stringify({
         success: false,
-        error: error.message
+        error:
+          error.message
       })
     };
   }
