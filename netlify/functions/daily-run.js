@@ -8,7 +8,8 @@ export async function handler() {
     const functions = [
       "sync-matches",
       "sync-news",
-      "generate-story"
+      "generate-story",
+      "generate-briefing"
     ];
 
     const results = [];
