@@ -9,7 +9,8 @@ export async function handler() {
       "sync-matches",
       "sync-news",
       "generate-story",
-      "generate-briefing"
+      "generate-briefing",
+      "generate-world-cup"
     ];
 
     const results = [];
