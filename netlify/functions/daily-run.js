@@ -6,10 +6,7 @@ export async function handler() {
       process.env.DEPLOY_PRIME_URL;
 
     const functions = [
-      "sync-matches",
-      "sync-news",
-      "generate-story",
-      "generate-briefing"
+      "sync-matches"
     ];
 
     const results = [];
