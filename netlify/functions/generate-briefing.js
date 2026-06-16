@@ -109,8 +109,19 @@ const raw =
         .replace(/```/g, "")
         .trim();
     
-    const briefing =
-      JSON.parse(cleaned);
+    //const briefing =
+    //  JSON.parse(cleaned);
+
+    try {
+      briefing = JSON.parse(cleaned);
+    } catch (e) {
+      console.error("AI JSON parse error");
+      console.error(cleaned);
+    
+      throw new Error(
+        "OpenAI returned invalid JSON"
+      );
+    }    
     
     const {
       data: saved,
