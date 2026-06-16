@@ -7,7 +7,8 @@ export async function handler() {
 
     const functions = [
       "sync-matches",
-      "sync-news"
+      "sync-news",
+      "generate-story"
     ];
 
     const results = [];
