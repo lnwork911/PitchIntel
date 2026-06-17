@@ -238,11 +238,19 @@ return (
                 {matches.map((match) => (
                   <div className="match-card" key={match.id}>
                     <div className="teams">
-                      <span className="badge">{getInitials(match.home_team)}</span>
+                      <img
+                        className="team-logo"
+                        src={match.home_crest}
+                        alt={match.home_team}
+                      />
                       <strong>{match.home_team}</strong>
                       <span>vs</span>
                       <strong>{match.away_team}</strong>
-                      <span className="badge">{getInitials(match.away_team)}</span>
+                      <img
+                        className="team-logo"
+                        src={match.away_crest}
+                        alt={match.away_team}
+                      />
                     </div>
 
                     <p>
