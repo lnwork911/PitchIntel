@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 
 export default function App() {
@@ -168,7 +169,21 @@ return (
             <p>AI-powered football intelligence</p>
           </div>
         </div>
-        <button className="nav-button">Daily Briefing</button>
+
+        <div className="nav-links">
+          <Link to="/">
+            Home
+          </Link>
+        
+          <Link to="/articles">
+            Articles
+          </Link>
+        
+          <Link to="/world-cup">
+            World Cup
+          </Link>
+        
+        </div>        
       </nav>
 
       <section className="hero-story">
