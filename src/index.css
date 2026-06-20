@@ -494,3 +494,14 @@ body {
 .nav-link:hover {
   color: var(--accent);
 }
+
+.archive-item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.archive-item:hover h4 {
+  color: var(--accent);
+}
