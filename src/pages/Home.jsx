@@ -401,8 +401,8 @@ return (
   </h3>
 
   {articles.map(article => (          
-      <div
-        key={article.id}
+      <Link
+        to={`/article/${article.id}`}
         className="archive-item"
       >
         <h4>{article.title}</h4>
