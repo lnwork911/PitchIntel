@@ -402,6 +402,7 @@ return (
 
   {articles.map(article => (          
       <Link
+        key={article.id}
         to={`/article/${article.id}`}
         className="archive-item"
       >
@@ -411,7 +412,7 @@ return (
           {article.summary ||
             "AI football intelligence story"}
         </p>
-      </div>
+      </Link>      
     ))}
 </div> 
           
