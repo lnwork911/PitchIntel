@@ -57,13 +57,22 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+
+  padding: 20px 0;
 }
 
 .brand {
   display: flex;
+  gap: 12px;
   align-items: center;
-  gap: 14px;
+}
+
+.brand-mark {
+  background: #38bdf8;
+  color: black;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-weight: bold;
 }
 
 .brand-mark {
@@ -180,11 +189,18 @@ body {
 }
 
 .card {
-  background: rgba(17, 31, 51, .92);
-  border: 1px solid var(--border);
-  border-radius: 22px;
-  padding: 24px;
-  box-shadow: 0 16px 50px rgba(0, 0, 0, .20);
+  background: rgba(17, 24, 39, 0.9);
+  border: 1px solid #1f2937;
+  border-radius: 16px;
+  padding: 20px;
+  backdrop-filter: blur(6px);
+
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  border-color: #38bdf8;
+  transform: translateY(-2px);
 }
 
 .card h3 {
@@ -204,10 +220,21 @@ body {
 }
 
 .match-card {
-  border: 1px solid var(--border);
-  border-radius: 18px;
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 14px;
   padding: 16px;
-  background: #0b1728;
+  transition: 0.2s;
+}
+
+.match-card:hover {
+  transform: translateY(-2px);
+  border-color: #38bdf8;
+}
+
+.match-grid {
+  display: grid;
+  gap: 16px;
 }
 
 .teams {
@@ -281,15 +308,20 @@ body {
 }
 
 .bar {
+  width: 100%;
   height: 8px;
-  background: #24344d;
+  background: #1f2937;
   border-radius: 999px;
   overflow: hidden;
 }
 
 .bar div {
   height: 100%;
-  background: linear-gradient(90deg, var(--yellow), var(--red));
+  background: linear-gradient(
+    90deg,
+    #38bdf8,
+    #ef4444
+  );
 }
 
 .subscribe p {
@@ -313,10 +345,21 @@ body {
 
 @media (max-width: 900px) {
   .navbar,
-  .ticker {
-    align-items: flex-start;
-  }
+.ticker {
+  display: flex;
+  gap: 16px;
+  align-items: center;
 
+  background: #111827;
+  border-bottom: 1px solid #1f2937;
+
+  padding: 10px 20px;
+}
+
+.ticker span {
+  color: #ef4444;
+  font-weight: bold;
+}
   .hero-story,
   .layout {
     grid-template-columns: 1fr;
@@ -494,4 +537,38 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hero-summary {
+  color: #94a3b8;
+  margin-top: 12px;
+  line-height: 1.7;
+}
+
+.primary-button {
+  margin-top: 16px;
+  background: #38bdf8;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.mood.green {
+  color: #22c55e;
+}
+
+.mood.yellow {
+  color: #eab308;
+}
+
+.mood.red {
+  color: #ef4444;
 }
