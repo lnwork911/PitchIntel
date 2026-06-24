@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./lib/supabase";
+import { useNavigate } from "react-router-dom";
 
+const navigate = useNavigate();
 export default function App() {
   const [matches, setMatches] = useState([]);
   const [story, setStory] = useState(null);
@@ -182,6 +184,12 @@ return (
               "Real match data, AI analysis, fan emotion, momentum signals, and storylines that explain what football feels like today."}
           </p>
           <button className="primary-button">Read Analysis</button>
+          <button
+            className="primary-button"
+            onClick={() => navigate(`/story/${story?.id}`)}
+          >
+            Read Analysis
+          </button>
         </div>
 
         <div className="hero-panel">
@@ -379,8 +387,8 @@ return (
 
   {articles.map(article => (          
       <div
-        key={article.id}
-        className="archive-item"
+        className="archive-item clickable"
+        onClick={() => navigate(`/story/${article.id}`)}
       >
         <h4>{article.title}</h4>
       
