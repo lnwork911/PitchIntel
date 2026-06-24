@@ -7,4 +7,4 @@ return (
         .order("created_at", {
           ascending: false
         });
-  </div>
+  </div>)
