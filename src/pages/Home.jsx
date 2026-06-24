@@ -172,7 +172,7 @@ return (
         </div>
       
         <div className="nav-links">
-          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/" className="nav-link">Home1</Link><br>
           <Link to="/articles" className="nav-link">Articles</Link>
         </div>
       </nav>
