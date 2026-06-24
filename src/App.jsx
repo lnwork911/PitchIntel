@@ -184,10 +184,10 @@ return (
               "Real match data, AI analysis, fan emotion, momentum signals, and storylines that explain what football feels like today."}
           </p>
           <button className="primary-button">Read Analysis</button>
-          <button
+          <!---<button
             className="primary-button"
             onClick={() => navigate(`/story/${story?.id}`)}
-          >
+          >--->
             Read Analysis
           </button>
         </div>
