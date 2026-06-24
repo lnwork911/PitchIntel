@@ -384,18 +384,18 @@ return (
   </h3>
 
   {articles.map(article => (          
-        <Link
-          key={article.id}
-          to={`/article/${article.id}`}
-          className="archive-item"
-        >
+      <Link
+        key={article.id}
+        to={`/article/${article.id}`}
+        className="archive-item"
+      >
         <h4>{article.title}</h4>
-      
+    
         <p>
           {article.summary ||
             "AI football intelligence story"}
         </p>
-      </div>
+      </Link>
     ))}
 </div> 
           
