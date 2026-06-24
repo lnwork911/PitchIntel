@@ -13,9 +13,9 @@ export default function App() {
 
       <Route path="/articles" element={<Articles />} />
 
-      <Route path="/article/:id" element={<Article />} />
+      <!---<Route path="/article/:id" element={<Article />} />--->
 
-      <Route path="/world-cup" element={<WorldCup />} />
+      <!---<Route path="/world-cup" element={<WorldCup />} />--->
 
     </Routes>
   );
