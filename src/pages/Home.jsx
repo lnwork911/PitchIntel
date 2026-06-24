@@ -1,8 +1,9 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
+import { Link } from "react-router-dom";
 
-export default function App() {
+export default function Home() {
   const [matches, setMatches] = useState([]);
   const [story, setStory] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -169,7 +170,11 @@ return (
             <p>AI-powered football intelligence</p>
           </div>
         </div>
-        <button className="nav-button">Daily Briefing</button>
+      
+        <div className="nav-links">
+          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/articles" className="nav-link">Articles</Link>
+        </div>
       </nav>
 
       <section className="hero-story">
@@ -379,10 +384,11 @@ return (
   </h3>
 
   {articles.map(article => (          
-      <div
-        key={article.id}
-        className="archive-item"
-      >
+        <Link
+          key={article.id}
+          to={`/article/${article.id}`}
+          className="archive-item"
+        >
         <h4>{article.title}</h4>
       
         <p>
