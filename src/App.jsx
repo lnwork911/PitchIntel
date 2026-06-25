@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "./lib/supabase";
 import { useNavigate } from "react-router-dom";
 
-const navigate = useNavigate();
+//const navigate = useNavigate();
 export default function App() {
   const [matches, setMatches] = useState([]);
   const [story, setStory] = useState(null);
