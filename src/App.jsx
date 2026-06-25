@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./lib/supabase";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 //const navigate = useNavigate();
 export default function App() {
